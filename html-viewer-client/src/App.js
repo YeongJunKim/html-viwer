@@ -1,16 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
 import FileUpload from './FileUpload';
-import HtmlFileUpload from './HtmlFileUpload';
 import FolderUploader from './FolderUpload';
+import FileList from './FileList';
+
 
 function App() {
   return (
     <div className="App">
-      <FileUpload></FileUpload>
-      <FolderUploader></FolderUploader>
-      <HtmlFileUpload></HtmlFileUpload>
-      <header className="App-header">
+      {/* <FileUpload></FileUpload> */}
+      <FileList></FileList>
+      {/* <FolderUploader></FolderUploader> */}
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -23,7 +24,7 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </header> */}
     </div>
   );
 }

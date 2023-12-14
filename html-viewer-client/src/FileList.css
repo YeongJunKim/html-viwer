@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    justify-content: space-between; /* 수평으로 공간 분배 */
+    align-items: center; /* 수직으로 가운데 정렬 */
+    max-width: 100%;
+  }
+
+table {
+    width: 100;
+    border-collapse: collapse;
+}
+
+button {
+    cursor: pointer
+}
+
+.iframe100{
+    display: block;
+    border: none;
+    height: 100vh;
+}

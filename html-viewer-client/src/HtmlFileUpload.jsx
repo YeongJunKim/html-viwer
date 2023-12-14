@@ -10,7 +10,7 @@ const HtmlFileUpload = () => {
 
     useEffect(() => {
         // 컴포넌트가 마운트되면 서버에서 HTML 파일 리스트를 가져옴
-        fetchHtmlFilesList();
+        // fetchHtmlFilesList();
     }, []);
 
     const fetchHtmlFilesList = async () => {
