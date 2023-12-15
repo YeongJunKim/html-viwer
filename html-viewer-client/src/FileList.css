@@ -6,12 +6,17 @@
   }
 
 table {
-    width: 100;
-    border-collapse: collapse;
+    min-width: 300;
+    width:auto;
+    /* width: 100; */
+    /* border-collapse: collapse; */
+    /* font-size: medium; */
+    font-size: small;
 }
 
 button {
-    cursor: pointer
+    cursor: pointer;
+    font-size: x-small;
 }
 
 .iframe100{

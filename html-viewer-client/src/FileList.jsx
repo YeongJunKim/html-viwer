@@ -11,7 +11,6 @@ const FileList = () => {
     const [renderedHtmlUrl, setRenderedHtmlUrl] = useState('');
     const [tableHeight, setTableHeight] = useState('300px'); // 초기 높이 설정
 
-
     useEffect(() => {
         // 화면 크기가 변경될 때마다 뷰포트 높이를 계산하여 높이를 업데이트
         const updateTableHeight = () => {
@@ -90,7 +89,7 @@ const FileList = () => {
 
     return (
         <div className="container">
-            <div style={{ height: tableHeight, width: '300px', overflowY: 'scroll' }}>
+            <div style={{ height: tableHeight, width: '250px', overflowY: 'scroll' }}>
                 <h2>Server Address</h2>
                 <div
                     contentEditable
@@ -124,7 +123,7 @@ const FileList = () => {
             </div>
             {renderedHtmlUrl && (
                 <div style={{ width: '100%', height: '100%' }}>
-                    <iframe title="Rendered HTML" src={renderedHtmlUrl} width="100%" className="iframe100" />
+                    <iframe title="Rendered HTML" src={renderedHtmlUrl} width="90%" className="iframe100" />
                 </div>
             )}
         </div>
