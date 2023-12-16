@@ -28,6 +28,7 @@ def read_file(filename):
     try:
         # 지정된 파일의 내용을 읽어와 응답으로 전송
         file_path = os.path.join(app.config['LOCAL_DIRECTORY'], filename)
+        print(file_path)
         return send_file(file_path)
     except Exception as e:
         # 오류가 발생한 경우 에러 메시지를 JSON 형식으로 응답

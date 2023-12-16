@@ -9,22 +9,18 @@ const FileList = () => {
     const [serverAddressText, setServerAddressText] = useState(defaultServerUrl);
     const [fileList, setFileList] = useState([]);
     const [renderedHtmlUrl, setRenderedHtmlUrl] = useState('');
-    const [tableHeight, setTableHeight] = useState('300px'); // 초기 높이 설정
+    const [tableHeight, setTableHeight] = useState('');
+    const [inputValue, setInputValue] = useState(defaultServerUrl);
+    const [tableVisibility, setTableVisibility] = useState(false);
 
     useEffect(() => {
-        // 화면 크기가 변경될 때마다 뷰포트 높이를 계산하여 높이를 업데이트
         const updateTableHeight = () => {
             const windowHeight = window.innerHeight;
-            setTableHeight(`${windowHeight - 50}px`); // 50은 여분의 여백
+            setTableHeight(`${windowHeight - 50}px`);
         };
 
-        // 페이지 로딩 시 한 번 실행
         updateTableHeight();
-
-        // 리사이즈 이벤트에 대한 리스너 등록
         window.addEventListener('resize', updateTableHeight);
-
-        // 컴포넌트 언마운트 시 리스너 해제
         return () => {
             window.removeEventListener('resize', updateTableHeight);
         };
@@ -32,18 +28,26 @@ const FileList = () => {
 
     const requestFileList = async () => {
         try {
-            console.log(serverAddressText)
+            console.log(inputValue)
             // Flask 서버의 파일 목록 엔드포인트에 GET 요청 보내기
-            const response = await axios.get(`${serverAddressText}/file_list`);
+            const response = await axios.get(`${inputValue}/file_list`);
 
             // 서버에서 받은 파일 목록을 상태에 설정
             const sortedFiles = response.data.files.sort((a, b) => a.localeCompare(b));
             setFileList(sortedFiles);
             // setFileList(response.data.files);
+            setTableVisibility(true);
         } catch (error) {
+            alert("Check server state and port");
             console.error('Error fetching file list:', error.message);
         }
+        
+    }
 
+
+    const fileListClear = () => {
+        setFileList([])
+        setTableVisibility(false);
     }
 
     // 파일에 대한 작업 수행 함수
@@ -52,7 +56,7 @@ const FileList = () => {
         console.log(`Performing action on file: ${fileName}`);
         try {
             // Flask 서버의 파일 읽기 엔드포인트에 GET 요청 보내기
-            const response = await axios.get(`http://localhost:3001/read_file/${fileName}`, { responseType: 'blob' });
+            const response = await axios.get(`${inputValue}/read_file/${fileName}`, { responseType: 'blob' });
 
             // 파일 내용을 다운로드
             const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -63,6 +67,7 @@ const FileList = () => {
             link.click();
             // document.body.removeChild(link);
         } catch (error) {
+            alert("Check server state and port");
             console.error('Error reading file:', error.message);
         }
     };
@@ -71,12 +76,13 @@ const FileList = () => {
         console.log(`Performing action on file: ${fileName}`);
         try {
             // Flask 서버의 파일 읽기 엔드포인트에 GET 요청 보내기
-            const response = await axios.get(`http://localhost:3001/read_file/${fileName}`);
+            const response = await axios.get(`${inputValue}/read_file/${fileName}`);
 
             const blob = new Blob([response.data], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             setRenderedHtmlUrl(url);
         } catch (error) {
+            alert("Check server state and port");
             console.error('Error reading file:', error.message);
         }
     };
@@ -86,46 +92,68 @@ const FileList = () => {
         setServerAddressText(e.target.value);
     };
 
+    // 입력 변경 핸들러
+    const handleInputChange = (e) => {
+        setInputValue(e.target.value);
+    };
 
     return (
-        <div className="container">
-            <div style={{ height: tableHeight, width: '250px', overflowY: 'scroll' }}>
-                <h2>Server Address</h2>
-                <div
-                    contentEditable
-                    style={{ border: '1px solid #ccc', minHeight: '10px', padding: '8px' }}
-                    onInput={handleTextChange}
-                >
-                    {serverAddressText}
-                </div>
-                <h2>File List</h2>
-                <button onClick={() => requestFileList()}>Read File</button>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>File Name</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {fileList.map((fileName, index) => (
-                            <tr key={index}>
-                                <td>{fileName}</td>
-                                <td>
-                                    {/* 각 행의 버튼에 이벤트 핸들러를 전달 */}
-                                    <button onClick={() => handleFileAction(fileName)}>Download</button>
-                                    <button onClick={() => handleReadFile(fileName)}>Show</button>
-                                </td>
+        <div className="main_container">
+            <div className='setting_container'>
+                
+                <label className='server_input'>
+                    server Address:
+                    <div style={{flex: '1'}}></div>
+                    <input type="text" value={inputValue} onChange={handleInputChange}/>
+                </label>
+
+                <div className='table_container'>
+                    <table style={{ visibility: tableVisibility ? 'visible' : 'hidden' }}>
+                        <thead>
+                            <tr>
+                                <th>File Name</th>
+                                <th style={{ width: '200px' }}></th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            {renderedHtmlUrl && (
-                <div style={{ width: '100%', height: '100%' }}>
-                    <iframe title="Rendered HTML" src={renderedHtmlUrl} width="90%" className="iframe100" />
+                        </thead>
+                        <tbody>
+                            {fileList.map((fileName, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        <div className='file_name_container'>
+                                            <div style={{width: '30px'}}>
+                                                {index}
+                                            </div>
+                                            <div style={{border: 'None', width: '200px'}}>
+                                                {fileName}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style={{width: '100px'}}>
+                                        <div className="table_action_button_container">
+                                            <button onClick={() => handleFileAction(fileName)}>Download</button>
+                                            <button onClick={() => handleReadFile(fileName)}>Display</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-            )}
+
+
+                <div style={{flex: '1'}}  />
+
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <button className='fetch_file' onClick={() => requestFileList()}>Fetch File List</button>
+                    <div style = {{width: '16px'}}></div>
+                    <button className='clear' onClick={() => fileListClear()}>Clear</button>
+                </div>
+            </div>
+            
+        
+            <div className="vertical-line"></div>
+
+            <iframe title="Rendered HTML" src={renderedHtmlUrl} className="iframe100" />
         </div>
     );
 };
