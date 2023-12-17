@@ -1,0 +1,16 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/miniconda
+{
+	"name": "Docker: html",
+	"build": { 
+		"context": "..",
+		"dockerfile": "./../Dockerfile",
+		"target": "html:0.0.1"
+	},
+	// "conda", "run", "-n", "html", "/bin/bash", "-c"
+	// "postStartCommand": "conda activate html && python /root/workspace/html-viwer-server/server.py"
+
+	"mounts": ["source=${localWorkspaceFolder}/../html-viewer-server,target=/root/workspace/html-viewer-server,type=bind"],
+
+	"workspaceFolder": "/root/workspace/html-viewer-server"
+}

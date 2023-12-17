@@ -12,13 +12,18 @@ local_directory = "./data/add-curved-parent-artery-0fd1cf1"
 @app.route('/file_list')
 def get_file_list():
     try:
-        # 지정된 디렉토리에서 파일 목록 가져오기
         files = os.listdir(app.config['LOCAL_DIRECTORY'])
-        print(files)
-        # 파일 목록을 JSON 형식으로 응답
+        
+        # c_path  = []
+        # for path in files:
+        #     c_path.append(path.split("_")[0])
+        # print(f"c_path: {c_path}")
+        
+        # files = sorted(files, key=lambda x:int(c_path[files.index(x)]))
+        
+        # print(files)
         return jsonify({'files': files})
     except Exception as e:
-        # 오류가 발생한 경우 에러 메시지를 JSON 형식으로 응답
         return jsonify({'error': str(e)}), 500
 
 
@@ -28,6 +33,8 @@ def read_file(filename):
     try:
         # 지정된 파일의 내용을 읽어와 응답으로 전송
         file_path = os.path.join(app.config['LOCAL_DIRECTORY'], filename)
+        
+        
         print(file_path)
         return send_file(file_path)
     except Exception as e:

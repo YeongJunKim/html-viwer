@@ -72,7 +72,7 @@
 
 table {
     border-collapse: collapse;
-    font-size: 13px;
+    /* margin-right: 10px; */
 }
 
 td,
@@ -106,15 +106,24 @@ th {
     align-items: center;
     flex-direction: row;
     justify-content: left;
-    overflow-x: scroll;
-    max-width: 250px;
-    height: 32px;
+    /* overflow-x:scroll; */
+    /* max-width: 250px; */
 }
 
-.file_name_container div{
+.file_name_container_index {
     border-right: 1px solid #DBDBDB;
     padding-left: 6px;
+    width: 30px;
 }
+
+.file_name_container_file_name {
+    border: none;
+    padding-left: 6px;
+    width: 200px;
+    overflow-x: auto;
+    align-content: center;
+}
+
 
 .table_action_button_container {
     display: flex;
@@ -128,7 +137,6 @@ th {
 .table_action_button_container button {
     width: 80px;
     height: 32px;
-    cursor: pointer;
     background-color: #858689;
     border: None;
     border-radius: 5px;
@@ -136,10 +144,9 @@ th {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-weight: 400;
-    font-style: bold;
+    font-weight: 600;
     font-size: 12px;
-    margin: 1px;
+    margin: 3px;
 }
 
 .table_action_button_container button:hover {

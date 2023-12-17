@@ -34,8 +34,9 @@ const FileList = () => {
 
             // 서버에서 받은 파일 목록을 상태에 설정
             const sortedFiles = response.data.files.sort((a, b) => a.localeCompare(b));
-            setFileList(sortedFiles);
-            // setFileList(response.data.files);
+            // const files = response.data.files
+            // setFileList(files);
+            setFileList(response.data.files);
             setTableVisibility(true);
         } catch (error) {
             alert("Check server state and port");
@@ -120,10 +121,10 @@ const FileList = () => {
                                 <tr key={index}>
                                     <td>
                                         <div className='file_name_container'>
-                                            <div style={{width: '30px'}}>
+                                            <div className='file_name_container_index'>
                                                 {index}
                                             </div>
-                                            <div style={{border: 'None', width: '200px'}}>
+                                            <div className='file_name_container_file_name'>
                                                 {fileName}
                                             </div>
                                         </div>
