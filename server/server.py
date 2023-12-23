@@ -33,9 +33,7 @@ def read_file(filename):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="html viewer server", description="desc.")
     parser.add_argument("-p", "--port", default="3001")
-    parser.add_argument(
-        "-d", "--dir", default="./data/add-curved-parent-artery-0fd1cf1"
-    )
+    parser.add_argument("-d", "--dir", default="./data")
     args = parser.parse_args()
 
     app.config["LOCAL_DIRECTORY"] = args.dir

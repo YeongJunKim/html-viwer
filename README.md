@@ -1,13 +1,13 @@
 # html-viwer
 
-## Client
+Docker install
 ``` bash
-$ conda install -c conda-forge npm
+$ make build_docker
 ```
 
-
-## Server
-1. Create conda environment
+After open docker
 ``` bash
-$ conda env create --n html-server -f environment.yml
+$ make html_server # server run
+$ make html_client # client run
 ```
+
