@@ -1,0 +1,12 @@
+{
+	"name": "Docker: html",
+	"build": { 
+		"context": "..",
+		"dockerfile": "./../Dockerfile",
+		"target": "html:0.0.1"
+	},
+
+	"mounts": ["source=${localWorkspaceFolder}/,target=/root/workspace/html_viewer,type=bind"],
+
+	"workspaceFolder": "/root/workspace/html_viewer"
+}
