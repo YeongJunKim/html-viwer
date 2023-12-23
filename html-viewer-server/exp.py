@@ -10,10 +10,7 @@ layout = QVBoxLayout()
 view = QWebEngineView()
 layout.addWidget(view)
 
-# view.setUrl(QUrl("https://www.google.com/"))
-# view.setHtml(open("/Users/colson/workspace/html/html_viewer/data/add-curved-parent-artery-0fd1cf1/2_0.html").read())
 view.setUrl(QUrl("http://localhost:8000/2_0.html"))
-# view.setHtml(open("./index.html").read())
 
 
 window.setLayout(layout)
